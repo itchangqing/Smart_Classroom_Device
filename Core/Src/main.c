@@ -29,6 +29,7 @@
 #include <string.h>
 #include "dht11.h"
 #include "light.h"
+#include "maikong.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -94,6 +95,7 @@ int main(void)
   MX_ADC1_Init();
   MX_TIM2_Init();
   MX_USART2_UART_Init();
+  MX_ADC2_Init();
   /* USER CODE BEGIN 2 */
 	HAL_ADCEx_Calibration_Start(&hadc1);
   /* USER CODE END 2 */
@@ -103,6 +105,7 @@ int main(void)
  float temp = 0;
 	uint8_t humi = 0;
 	uint32_t light = 0;
+	uint32_t volume = 0;
 	char upload_data[100];
 	
   while (1)
@@ -120,6 +123,10 @@ int main(void)
 		sprintf(upload_data, "%s/sensor/light %u\n", DEVICE_ID, light);
 		HAL_UART_Transmit(&huart2, (uint8_t*)upload_data, strlen(upload_data), 1000);
 		
+		
+		volume = Volume_Get();
+		sprintf(upload_data, "%s/sensor/volume %u\n", DEVICE_ID, volume);
+		HAL_UART_Transmit(&huart2, (uint8_t*)upload_data, strlen(upload_data), 1000);
 		// 其他传感器可以在这里扩展
 		// ......
 		

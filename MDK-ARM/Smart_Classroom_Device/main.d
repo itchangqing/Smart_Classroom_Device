@@ -38,3 +38,4 @@ smart_classroom_device\main.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
 smart_classroom_device\main.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
 smart_classroom_device\main.o: ../Core/Inc/dht11.h
 smart_classroom_device\main.o: ../Core/Inc/light.h
+smart_classroom_device\main.o: ../Core/Inc/maikong.h

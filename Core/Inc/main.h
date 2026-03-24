@@ -57,7 +57,9 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
-#define MAIKONG_Pin GPIO_PIN_4
+#define LIGHT_Pin GPIO_PIN_4
+#define LIGHT_GPIO_Port GPIOA
+#define MAIKONG_Pin GPIO_PIN_5
 #define MAIKONG_GPIO_Port GPIOA
 
 /* USER CODE BEGIN Private defines */
