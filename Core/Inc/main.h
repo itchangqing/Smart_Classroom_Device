@@ -61,6 +61,11 @@ void Error_Handler(void);
 #define LIGHT_GPIO_Port GPIOA
 #define MAIKONG_Pin GPIO_PIN_5
 #define MAIKONG_GPIO_Port GPIOA
+#define LED_PRO_Pin GPIO_PIN_6
+#define LED_PRO_GPIO_Port GPIOA
+#define HC_SR501_Pin GPIO_PIN_5
+#define HC_SR501_GPIO_Port GPIOC
+#define HC_SR501_EXTI_IRQn EXTI9_5_IRQn
 
 /* USER CODE BEGIN Private defines */
 

@@ -21,6 +21,9 @@
 #include "usart.h"
 
 /* USER CODE BEGIN 0 */
+#include "led.h"
+#include "buzzer.h"
+#include "fan.h"
 static uint8_t temp;
 /* USER CODE END 0 */
 
@@ -124,32 +127,63 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 		if(temp == 'a')
 		{
 			// 打开 LED
-			HAL_GPIO_WritePin(GPIOC, GPIO_PIN_1 | GPIO_PIN_2 | GPIO_PIN_3, GPIO_PIN_SET);
+			LED_Open();
 		}
 		else if(temp == 'b')
 		{
 			// 关闭 LED
-			HAL_GPIO_WritePin(GPIOC, GPIO_PIN_1 | GPIO_PIN_2 | GPIO_PIN_3, GPIO_PIN_RESET);
+			LED_Close();
 		}
 		else if(temp == 'c')
 		{
 			// 报警
-			HAL_GPIO_WritePin(GPIOC, GPIO_PIN_7, GPIO_PIN_SET);		
+			BUZZER_Open();
 		}
 		else if(temp == 'd')
 		{
 			// 静音
-			HAL_GPIO_WritePin(GPIOC, GPIO_PIN_7, GPIO_PIN_RESET);				
+			BUZZER_Close();
 		}
 		else if(temp == 'e')
 		{
 			// 开风扇
-			HAL_GPIO_WritePin(GPIOC, GPIO_PIN_4, GPIO_PIN_SET);				
+			FAN_Open();
 		}
 		else if(temp == 'f')
 		{
 			// 关风扇
-			HAL_GPIO_WritePin(GPIOC, GPIO_PIN_4, GPIO_PIN_RESET);				
+			FAN_Close();
+		}
+		else if(temp == 'g')
+		{
+			// 开启智能台灯 1 挡
+			Set_hao(1);
+			
+		}
+		else if(temp == 'h')
+		{
+			// 开启智能台灯 2 挡
+			Set_hao(2);
+		}
+		else if(temp == 'i')
+		{
+			// 开启智能台灯 3 挡
+			Set_hao(3);
+		}
+		else if(temp == 'j')
+		{
+			// 关闭智能台灯
+			Set_hao(0);
+		}
+		else if(temp == 'k')
+		{
+			// 开启智能台灯呼吸
+			Set_Mode(1);
+		}
+		else if(temp == 'l')
+		{
+			// 开启智能台灯定时
+			Set_Tick(1);
 		}
 		// 在这里扩展远程硬件控制功能
 		// ......

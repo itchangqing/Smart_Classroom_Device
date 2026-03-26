@@ -31,3 +31,6 @@ smart_classroom_device\usart.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_ha
 smart_classroom_device\usart.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim.h
 smart_classroom_device\usart.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h
 smart_classroom_device\usart.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h
+smart_classroom_device\usart.o: ../Core/Inc/led.h
+smart_classroom_device\usart.o: ../Core/Inc/buzzer.h
+smart_classroom_device\usart.o: ../Core/Inc/fan.h

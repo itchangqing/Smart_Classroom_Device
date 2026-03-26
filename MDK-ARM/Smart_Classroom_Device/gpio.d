@@ -31,3 +31,4 @@ smart_classroom_device\gpio.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal
 smart_classroom_device\gpio.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim.h
 smart_classroom_device\gpio.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h
 smart_classroom_device\gpio.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h
+smart_classroom_device\gpio.o: ../Core/Inc/led.h

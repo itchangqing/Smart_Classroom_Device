@@ -414,6 +414,21 @@
               <FilePath>D:\tengxunhuiyi\TencentMeeting\IM\file\2026-3\17929598712200430682\Smart_Classroom_Device\Smart_Classroom_Device\Core\Src\light.c</FilePath>
             </File>
             <File>
+              <FileName>led.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\led.c</FilePath>
+            </File>
+            <File>
+              <FileName>buzzer.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\buzzer.c</FilePath>
+            </File>
+            <File>
+              <FileName>fan.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\fan.c</FilePath>
+            </File>
+            <File>
               <FileName>main.c</FileName>
               <FileType>1</FileType>
               <FilePath>../Core/Src/main.c</FilePath>
@@ -549,6 +564,11 @@
               <FileName>stm32f1xx_hal_msp.c</FileName>
               <FileType>1</FileType>
               <FilePath>../Core/Src/stm32f1xx_hal_msp.c</FilePath>
+            </File>
+            <File>
+              <FileName>led_pro.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\led_pro.c</FilePath>
             </File>
           </Files>
         </Group>

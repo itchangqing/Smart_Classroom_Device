@@ -30,6 +30,7 @@
 #include "dht11.h"
 #include "light.h"
 #include "maikong.h"
+#include "led_pro.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -96,20 +97,29 @@ int main(void)
   MX_TIM2_Init();
   MX_USART2_UART_Init();
   MX_ADC2_Init();
+  MX_TIM3_Init();
   /* USER CODE BEGIN 2 */
 	HAL_ADCEx_Calibration_Start(&hadc1);
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
- float temp = 0;
+	float temp = 0;
 	uint8_t humi = 0;
 	uint32_t light = 0;
 	uint32_t volume = 0;
 	char upload_data[100];
 	
+	uint32_t t = HAL_GetTick();
+	
+	
+	uint8_t led_hao = 0,led_mode = 0,led_tick = 0;//用于接收判断台灯目前处于什么状态
+	
   while (1)
-  {
+  {		
+	  //2s一次采集周期
+	  if(HAL_GetTick() - t > 2000) {
+		  t = HAL_GetTick();
 		// 采集一次温湿度数据
 		if(DHT11_Get(&temp, &humi) == 0)
 		{
@@ -117,21 +127,22 @@ int main(void)
 			sprintf(upload_data, "%s/sensor/dht11 %.1f_%u\n", DEVICE_ID, temp, humi);
 			HAL_UART_Transmit(&huart2, (uint8_t*)upload_data, strlen(upload_data), 1000);
 		}
-		
+
 		// 采集光照强度，并上传到云端
 		light = Light_Get();
 		sprintf(upload_data, "%s/sensor/light %u\n", DEVICE_ID, light);
 		HAL_UART_Transmit(&huart2, (uint8_t*)upload_data, strlen(upload_data), 1000);
-		
-		
+
+		//采集声音强度，上传云端
 		volume = Volume_Get();
 		sprintf(upload_data, "%s/sensor/volume %u\n", DEVICE_ID, volume);
 		HAL_UART_Transmit(&huart2, (uint8_t*)upload_data, strlen(upload_data), 1000);
 		// 其他传感器可以在这里扩展
 		// ......
-		
-		// 采集周期为 2S
-		HAL_Delay(2000);
+	}
+		Get_Every(&led_hao,&led_mode,&led_tick);
+		LED_PRO_Open(led_hao);
+		LED_PRO_Mode(led_mode);
 		
     /* USER CODE END WHILE */
 
