@@ -2,6 +2,14 @@
 #include "maikong.h"
 
 
+
+void Maikong_Init(void) {
+
+	HAL_ADCEx_Calibration_Start(&hadc2);
+
+}
+
+
 uint32_t Volume_Get(void) 
 {
 	HAL_ADC_Start(&hadc2);

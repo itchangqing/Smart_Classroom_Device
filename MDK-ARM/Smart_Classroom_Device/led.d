@@ -1,4 +1,4 @@
-smart_classroom_device\led.o: led.c
+smart_classroom_device\led.o: ..\Core\Src\led.c
 smart_classroom_device\led.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\math.h
 smart_classroom_device\led.o: ../Core/Inc/led.h
 smart_classroom_device\led.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
@@ -29,6 +29,7 @@ smart_classroom_device\led.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_
 smart_classroom_device\led.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_adc_ex.h
 smart_classroom_device\led.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash.h
 smart_classroom_device\led.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash_ex.h
+smart_classroom_device\led.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_i2c.h
 smart_classroom_device\led.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pwr.h
 smart_classroom_device\led.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim.h
 smart_classroom_device\led.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h

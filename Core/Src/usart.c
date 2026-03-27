@@ -24,6 +24,7 @@
 #include "led.h"
 #include "buzzer.h"
 #include "fan.h"
+#include "eeprom.h"
 static uint8_t temp;
 /* USER CODE END 0 */
 
@@ -158,32 +159,61 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 		{
 			// 开启智能台灯 1 挡
 			Set_hao(1);
-			
+			EEPROM_Write(0x66,1);
 		}
 		else if(temp == 'h')
 		{
 			// 开启智能台灯 2 挡
 			Set_hao(2);
+			EEPROM_Write(0x66,2);
 		}
 		else if(temp == 'i')
 		{
 			// 开启智能台灯 3 挡
 			Set_hao(3);
+			EEPROM_Write(0x66,3);
 		}
 		else if(temp == 'j')
 		{
 			// 关闭智能台灯
 			Set_hao(0);
+			EEPROM_Write(0x66,0);
 		}
 		else if(temp == 'k')
 		{
-			// 开启智能台灯呼吸
+			// 开启智能台灯慢慢呼吸
 			Set_Mode(1);
+			EEPROM_Write(0x66,4);
 		}
 		else if(temp == 'l')
 		{
-			// 开启智能台灯定时
+			// 开启智能台灯中速呼吸
+			Set_Mode(2);
+			EEPROM_Write(0x66,5);
+		}
+		else if(temp == 'm')
+		{
+			// 开启智能台灯快速呼吸
+			Set_Mode(3);
+			EEPROM_Write(0x66,5);
+		}
+		else if(temp == 'n')
+		{
+			// 开启智能台灯定时 1 分钟
 			Set_Tick(1);
+			EEPROM_Write(0x66,6);
+		}
+		else if(temp == 'o')
+		{
+			// 开启智能台灯定时 5 分钟
+			Set_Tick(2);
+			EEPROM_Write(0x66,7);
+		}
+		else if(temp == 'p')
+		{
+			// 关闭智能台灯定时
+			Set_Tick(3);
+			EEPROM_Write(0x66,8);
 		}
 		// 在这里扩展远程硬件控制功能
 		// ......

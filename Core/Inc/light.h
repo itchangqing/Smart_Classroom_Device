@@ -5,7 +5,7 @@
 #include <stdint.h>
 
 
-
+void Light_Init(void);
 uint32_t Light_Get(void);
 
 

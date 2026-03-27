@@ -4,6 +4,8 @@
 
 #include "stdint.h"
 
+void LED_Pro_Init(void);
+
 void Set_hao(uint8_t temp);
 void Set_Mode(uint8_t temp);
 void Set_Tick(uint8_t temp);	

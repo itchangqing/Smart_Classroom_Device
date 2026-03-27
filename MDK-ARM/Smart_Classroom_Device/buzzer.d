@@ -1,4 +1,4 @@
-smart_classroom_device\buzzer.o: buzzer.c
+smart_classroom_device\buzzer.o: ..\Core\Src\buzzer.c
 smart_classroom_device\buzzer.o: ../Core/Inc/gpio.h
 smart_classroom_device\buzzer.o: ../Core/Inc/main.h
 smart_classroom_device\buzzer.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h
@@ -27,6 +27,7 @@ smart_classroom_device\buzzer.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_h
 smart_classroom_device\buzzer.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_adc_ex.h
 smart_classroom_device\buzzer.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash.h
 smart_classroom_device\buzzer.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash_ex.h
+smart_classroom_device\buzzer.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_i2c.h
 smart_classroom_device\buzzer.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pwr.h
 smart_classroom_device\buzzer.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim.h
 smart_classroom_device\buzzer.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h

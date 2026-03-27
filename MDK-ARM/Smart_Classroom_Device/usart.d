@@ -27,6 +27,7 @@ smart_classroom_device\usart.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_ha
 smart_classroom_device\usart.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_adc_ex.h
 smart_classroom_device\usart.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash.h
 smart_classroom_device\usart.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash_ex.h
+smart_classroom_device\usart.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_i2c.h
 smart_classroom_device\usart.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pwr.h
 smart_classroom_device\usart.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim.h
 smart_classroom_device\usart.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h
@@ -34,3 +35,4 @@ smart_classroom_device\usart.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_ha
 smart_classroom_device\usart.o: ../Core/Inc/led.h
 smart_classroom_device\usart.o: ../Core/Inc/buzzer.h
 smart_classroom_device\usart.o: ../Core/Inc/fan.h
+smart_classroom_device\usart.o: ../Core/Inc/eeprom.h

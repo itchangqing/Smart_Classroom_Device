@@ -19,6 +19,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "adc.h"
+#include "i2c.h"
 #include "tim.h"
 #include "usart.h"
 #include "gpio.h"
@@ -31,6 +32,7 @@
 #include "light.h"
 #include "maikong.h"
 #include "led_pro.h"
+#include "eeprom.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -98,22 +100,30 @@ int main(void)
   MX_USART2_UART_Init();
   MX_ADC2_Init();
   MX_TIM3_Init();
+  MX_I2C1_Init();
   /* USER CODE BEGIN 2 */
-	HAL_ADCEx_Calibration_Start(&hadc1);
+  LED_Pro_Init();
+	Light_Init();
+	Maikong_Init();
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-	float temp = 0;
-	uint8_t humi = 0;
-	uint32_t light = 0;
-	uint32_t volume = 0;
+	float temp = 0; //温度
+	uint8_t humi = 0,volume = 0; //湿度和声音强度
+	uint32_t light = 0; //光照强度
+	
 	char upload_data[100];
-	
-	uint32_t t = HAL_GetTick();
-	
-	
 	uint8_t led_hao = 0,led_mode = 0,led_tick = 0;//用于接收判断台灯目前处于什么状态
+	uint8_t data = 0;//默认0
+	
+	uint32_t t = HAL_GetTick();//获取当前时间，用于周期性采集传感器数据
+	EEPROM_Read(0X66, &data);//获取存储器里面的值，看看之前灯是什么状态
+	
+	//先设置一下led_pro的状态
+	if(data <=3 ) Set_hao(data);
+	else if(data == 4 || data == 5) Set_Mode(1);
+	else Set_Tick(data - 5);//减去5 之后只能是 1 或者 2 ，1是定时1分钟，2是定时5分钟
 	
   while (1)
   {		
@@ -139,10 +149,18 @@ int main(void)
 		HAL_UART_Transmit(&huart2, (uint8_t*)upload_data, strlen(upload_data), 1000);
 		// 其他传感器可以在这里扩展
 		// ......
-	}
+	}	
+	  //判断目前是什么状态，从而执行台灯相应的动作
 		Get_Every(&led_hao,&led_mode,&led_tick);
-		LED_PRO_Open(led_hao);
-		LED_PRO_Mode(led_mode);
+		
+		//如果不是呼吸，那么就执行开灯，避免开灯产生的ccr影响呼吸
+		if(led_mode == 0) {
+			
+			LED_PRO_Open(led_hao);
+		}
+		//如果是呼吸，那就执行
+		else LED_PRO_Mode(led_mode);
+
 		
     /* USER CODE END WHILE */
 

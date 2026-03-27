@@ -26,11 +26,13 @@ smart_classroom_device\main.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal
 smart_classroom_device\main.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_adc_ex.h
 smart_classroom_device\main.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash.h
 smart_classroom_device\main.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash_ex.h
+smart_classroom_device\main.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_i2c.h
 smart_classroom_device\main.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pwr.h
 smart_classroom_device\main.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim.h
 smart_classroom_device\main.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h
 smart_classroom_device\main.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h
 smart_classroom_device\main.o: ../Core/Inc/adc.h
+smart_classroom_device\main.o: ../Core/Inc/i2c.h
 smart_classroom_device\main.o: ../Core/Inc/tim.h
 smart_classroom_device\main.o: ../Core/Inc/usart.h
 smart_classroom_device\main.o: ../Core/Inc/gpio.h
@@ -40,3 +42,4 @@ smart_classroom_device\main.o: ../Core/Inc/dht11.h
 smart_classroom_device\main.o: ../Core/Inc/light.h
 smart_classroom_device\main.o: ../Core/Inc/maikong.h
 smart_classroom_device\main.o: ../Core/Inc/led_pro.h
+smart_classroom_device\main.o: ../Core/Inc/eeprom.h
