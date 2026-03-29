@@ -147,8 +147,23 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 		}
 		else if(temp == 'e')
 		{
-			// 开风扇
-			FAN_Open();
+			// 开风扇1
+			FAN_Open_1();
+		}
+		else if(temp == '!')
+		{
+			// 开风扇2
+			FAN_Open_2();
+		}
+		else if(temp == '@')
+		{
+			// 开风扇3
+			FAN_Open_3();
+		}
+		else if(temp == '#')
+		{
+			// 翻转
+			FAN_Toggle();
 		}
 		else if(temp == 'f')
 		{
@@ -206,13 +221,13 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 		else if(temp == 'o')
 		{
 			// 开启智能台灯定时 5 分钟
-			Set_Tick(2);
+			Set_Tick(5);
 			EEPROM_Write(0x66,7);
 		}
 		else if(temp == 'p')
 		{
 			// 关闭智能台灯定时
-			Set_Tick(3);
+			Set_Tick(0);
 			EEPROM_Write(0x66,8);
 		}
 		// 在这里扩展远程硬件控制功能

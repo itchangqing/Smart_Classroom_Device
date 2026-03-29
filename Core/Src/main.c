@@ -33,6 +33,9 @@
 #include "maikong.h"
 #include "led_pro.h"
 #include "eeprom.h"
+#include "sht30.h"
+#include "oled.h"
+#include "fan.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -53,7 +56,8 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-
+//用于定时记时间
+uint32_t time = 0;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -83,7 +87,7 @@ int main(void)
   HAL_Init();
 
   /* USER CODE BEGIN Init */
-
+	
   /* USER CODE END Init */
 
   /* Configure the system clock */
@@ -105,15 +109,21 @@ int main(void)
   LED_Pro_Init();
 	Light_Init();
 	Maikong_Init();
+	OLED_Display_On();
+	OLED_Init();
+	FAN_Init();
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-	float temp = 0; //温度
-	uint8_t humi = 0,volume = 0; //湿度和声音强度
+	time = HAL_GetTick();
+	int tick_friend = 0;
+	float temp = 0, humi = 0;  //温度
+	uint8_t volume = 0; //湿度和声音强度
 	uint32_t light = 0; //光照强度
 	
 	char upload_data[100];
+	char data_oled[30]; 	//在屏幕上面显示
 	uint8_t led_hao = 0,led_mode = 0,led_tick = 0;//用于接收判断台灯目前处于什么状态
 	uint8_t data = 0;//默认0
 	
@@ -123,19 +133,50 @@ int main(void)
 	//先设置一下led_pro的状态
 	if(data <=3 ) Set_hao(data);
 	else if(data == 4 || data == 5) Set_Mode(1);
-	else Set_Tick(data - 5);//减去5 之后只能是 1 或者 2 ，1是定时1分钟，2是定时5分钟
+	else Set_Tick(data - 6);//减去5 之后只能是0 或者 1 或者 2 ，1是定时1分钟，2是定时5分钟
+	
+	//显示过度动画
+	OLED_Clear();
+	for(uint8_t  x = 8; x <= 112; x ++) {
+		
+			OLED_ShowHao(x,0);
+			OLED_ShowChar(x - 8, 0, ' ', 16);
+		
+	}
+	
+	OLED_ShowTEmp(0,1);
+	OLED_ShowHUm(0,4);
+	OLED_ShowTIttle(80,1);
+	
+//	HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_2); 
+//	HAL_GPIO_WritePin(GPIOC, GPIO_PIN_4, GPIO_PIN_RESET); 
+//__HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_2, 499); 
 	
   while (1)
   {		
 	  //2s一次采集周期
 	  if(HAL_GetTick() - t > 2000) {
 		  t = HAL_GetTick();
-		// 采集一次温湿度数据
-		if(DHT11_Get(&temp, &humi) == 0)
-		{
-			// 如果采集温湿度数据成功，就上传云端
-			sprintf(upload_data, "%s/sensor/dht11 %.1f_%u\n", DEVICE_ID, temp, humi);
-			HAL_UART_Transmit(&huart2, (uint8_t*)upload_data, strlen(upload_data), 1000);
+//		// 使用DHT11采集一次温湿度数据
+//		if(DHT11_Get(&temp, &humi) == 0)
+//		{
+//			// 如果采集温湿度数据成功，就上传云端
+//			sprintf(upload_data, "%s/sensor/dht11 %.1f_%u\n", DEVICE_ID, temp, humi);
+//			HAL_UART_Transmit(&huart2, (uint8_t*)upload_data, strlen(upload_data), 1000);
+//		}
+		  
+		//使用SHT30采集温湿度
+		if(SHT30_Get(&temp,&humi) == 0) {
+			
+			sprintf(upload_data,"%s/sensor/sht30 %.2f_%.2f\n",DEVICE_ID,temp, humi);
+			HAL_UART_Transmit(&huart2,(uint8_t*)upload_data,strlen(upload_data),1000);
+			
+			sprintf(data_oled,"%c%.2f",':',temp);
+			OLED_ShowString(32,1,(u8 *)data_oled,16);
+			
+			sprintf(data_oled,":%.2f%%RH",humi);
+			OLED_ShowString(32,4,(u8 *)data_oled,16);
+		
 		}
 
 		// 采集光照强度，并上传到云端
@@ -150,7 +191,7 @@ int main(void)
 		// 其他传感器可以在这里扩展
 		// ......
 	}	
-	  //判断目前是什么状态，从而执行台灯相应的动作
+	  //获取当前台灯的状态值，判断目前是什么状态，从而执行台灯相应的动作
 		Get_Every(&led_hao,&led_mode,&led_tick);
 		
 		//如果不是呼吸，那么就执行开灯，避免开灯产生的ccr影响呼吸
@@ -159,8 +200,25 @@ int main(void)
 			LED_PRO_Open(led_hao);
 		}
 		//如果是呼吸，那就执行
-		else LED_PRO_Mode(led_mode);
-
+		else  LED_PRO_Mode(led_mode);
+	
+		
+		//如果开启定时，开启定时当前时间只能改变一次，frined = 1
+		if(tick_friend == 0 && led_tick > 0)LED_PRO_Time(led_tick),tick_friend = 1;
+		
+		//如果开启定时又关闭了定时，那么需要提前把frined给置为0，要不然下一次不会有新的时间
+		if(led_tick == 0) tick_friend = 0;
+		
+		//这里是时间到达执行的动作
+		if(led_tick > 0 && HAL_GetTick() - time > led_tick * 1000 * 3) {
+		
+			Set_Tick(0);
+				
+			LED_PRO_Time(0); //这里关闭定时，在上面会帮助我们关闭所有的灯，因为已经把挡位和呼吸都置为0
+			
+			tick_friend = 0;
+		}
+		
 		
     /* USER CODE END WHILE */
 

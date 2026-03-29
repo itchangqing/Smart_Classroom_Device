@@ -7,6 +7,7 @@ static uint8_t	LED_Pro_mode = 0;	//慢呼吸模式为1 中速模式为2 快闪模式为3
 static uint8_t	LED_Pro_tick = 0;	//定时 1为定时1min  2 为10min  3 为取消定时
 
 
+
 void LED_Pro_Init(void) {
 		
 		//启动pwm信号正常输出
@@ -20,20 +21,22 @@ void LED_Pro_Init(void) {
 void Set_hao(uint8_t temp) {
 	LED_Pro_hao = temp;
 	LED_Pro_mode = 0;	
-	LED_Pro_tick = 0;
+	
 }
+
 
 void Set_Mode(uint8_t temp) { 
 
 	LED_Pro_mode = temp;
 	LED_Pro_hao = 0;
-	LED_Pro_tick = 0;
+	
 }
 
+
+//定时不能影响呼吸或者灯挡位
 void Set_Tick(uint8_t temp) {
+	
 	LED_Pro_tick = temp;
-	LED_Pro_hao = 0;	
-	LED_Pro_mode = 0;
 }
 
 
@@ -50,6 +53,7 @@ void LED_PRO_Open(uint8_t dangwei) {
 	if(dangwei == 0) {//关闭
 	
 	__HAL_TIM_SET_COMPARE(&htim3,TIM_CHANNEL_1,0);//动态写入ccr
+
 	//HAL_TIM_Base_Stop(&htim3);
 		
 	}
@@ -92,14 +96,15 @@ void LED_PRO_Mode(uint8_t mode) {
 //定时
 void LED_PRO_Time(uint16_t t) {
 	
-	//1min
-	if(t == 1) {
-	
-	
+	//关闭定时
+	if(t == 0) {
+		LED_Pro_tick = 0;
+		LED_Pro_hao = 0;//这里虽然在前端点击的时候已经将hao置为0，但是在定时的时候也会调用这个函数，所以也需要置为0
+		LED_Pro_mode = 0;
+		
 	}
-	//5min
-	else {
-	
-	
-	}
+		
+	//开启定时
+	else time = HAL_GetTick();
+		
 }

@@ -43,3 +43,7 @@ smart_classroom_device\main.o: ../Core/Inc/light.h
 smart_classroom_device\main.o: ../Core/Inc/maikong.h
 smart_classroom_device\main.o: ../Core/Inc/led_pro.h
 smart_classroom_device\main.o: ../Core/Inc/eeprom.h
+smart_classroom_device\main.o: ../Core/Inc/sht30.h
+smart_classroom_device\main.o: ../Core/Inc/oled.h
+smart_classroom_device\main.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
+smart_classroom_device\main.o: ../Core/Inc/fan.h
